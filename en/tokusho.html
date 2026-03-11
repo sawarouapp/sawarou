@@ -52,5 +52,24 @@ footer a { color:var(--muted); text-decoration:underline; }
 </div>
 <footer>
   <p>© 2026 Sawarou. All rights reserved. ／ <a href="./index.html">Top</a> ／ <a href="./privacy.html">Privacy Policy</a></p>
-</footer>
+</footer><!-- GDPR Cookie Banner -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a0e;color:#f8f7f3;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <span>This site uses cookies for Google Analytics to improve our service. <a href="./privacy.html" style="color:#e8ff47;">Privacy Policy</a></span>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button onclick="setCookieConsent(false)" style="background:transparent;border:1px solid #666;color:#f8f7f3;padding:6px 16px;border-radius:4px;cursor:pointer;font-size:13px;">Decline</button>
+    <button onclick="setCookieConsent(true)" style="background:#e8ff47;border:none;color:#1a1a0e;padding:6px 16px;border-radius:4px;cursor:pointer;font-size:13px;font-weight:600;">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  var consent = localStorage.getItem("cookie_consent");
+  if(consent === null){
+    document.getElementById("cookie-banner").style.display = "flex";
+  }
+})();
+function setCookieConsent(accepted){
+  localStorage.setItem("cookie_consent", accepted ? "true" : "false");
+  document.getElementById("cookie-banner").style.display = "none";
+}
+</script>
 </body></html>
