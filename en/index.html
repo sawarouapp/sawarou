@@ -117,16 +117,9 @@ nav {
 .hero-title em {
   font-style: normal;
   position: relative;
-  display: inline-block;
-}
-.hero-title em::after {
-  content: '';
-  position: absolute;
-  bottom: 2px; left: 0; right: 0;
-  height: 6px;
-  background: var(--accent);
-  z-index: -1;
-  transform: skewX(-3deg);
+  display: inline;
+  background: linear-gradient(transparent 60%, var(--accent) 60%);
+  padding: 0 2px;
 }
 
 .hero-sub {
@@ -149,7 +142,7 @@ nav {
 }
 .btn-primary {
   background: var(--accent-dark);
-  color: var(--accent);
+  color: #ffffff;
   font-family: 'Syne', sans-serif;
   font-weight: 800;
   font-size: 15px;
