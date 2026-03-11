@@ -2,13 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8DW3XPX38K"></script>
+<!-- Google tag (gtag.js) - loads only after cookie consent -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-8DW3XPX38K');
+  // GA disabled by default
+  gtag('consent', 'default', {
+    analytics_storage: 'denied'
+  });
+  function loadGA() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-8DW3XPX38K';
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', 'G-8DW3XPX38K');
+  }
+  // If already accepted, load GA immediately
+  if (localStorage.getItem('cookie_consent') === 'true') {
+    loadGA();
+  }
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sawarou — Edit AI-Generated HTML Without Code.</title>
@@ -975,6 +988,10 @@ document.querySelectorAll('.demo-tab').forEach(function(tab) {
 function setCookieConsent(accepted){
   localStorage.setItem("cookie_consent", accepted ? "true" : "false");
   document.getElementById("cookie-banner").style.display = "none";
+  if(accepted){
+    gtag('consent', 'update', { analytics_storage: 'granted' });
+    loadGA();
+  }
 }
 </script>
 </body>
