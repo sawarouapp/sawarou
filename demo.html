@@ -298,7 +298,7 @@ body { padding-top: 40px; }
 
 <div class="demo-banner">
   <span>🔍 デモ版</span>
-  <span class="demo-banner-note">サンプルHTMLのみ使用できます。ご自身のHTMLを編集・ダウンロードするには購入してください。</span>
+  <span class="demo-banner-note">⚠️ PC・Chrome専用 ／ サンプルHTMLのみ使用できます。ご自身のHTMLを編集・ダウンロードするには購入してください。</span>
   <a href="https://sawarou.gumroad.com/l/sawarou" target="_blank" class="demo-banner-btn">購入する — ¥3,980</a>
 </div>
 
@@ -1015,5 +1015,40 @@ function esc(s) {
 }
 })();
 </script>
+<!-- スマホ・タブレット警告 -->
+<div id="mobileWall" style="display:none;position:fixed;inset:0;z-index:9999;background:#0e0e0f;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;">
+  <div style="font-size:48px;margin-bottom:24px;">💻</div>
+  <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#f0f0ee;margin-bottom:16px;line-height:1.4;">
+    このデモはPC・Chrome専用です
+  </div>
+  <div style="font-size:14px;color:rgba(240,240,238,.5);line-height:1.9;max-width:320px;margin-bottom:32px;">
+    スマートフォン・タブレットには対応していません。<br>
+    PCのGoogle Chromeからアクセスしてください。
+  </div>
+  <a href="https://sawarouapp.github.io/sawarou/" style="display:inline-block;background:rgba(255,255,255,.08);color:#f0f0ee;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:12px 24px;border-radius:6px;text-decoration:none;border:1px solid rgba(255,255,255,.1);">← Sawarouのページに戻る</a>
+</div>
+
+<script>
+// スマホ・タブレット検知
+(function(){
+  function isMobile() {
+    return window.innerWidth < 768 || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  }
+  function checkDevice() {
+    var wall = document.getElementById('mobileWall');
+    if (!wall) return;
+    if (isMobile()) {
+      wall.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    } else {
+      wall.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+  checkDevice();
+  window.addEventListener('resize', checkDevice);
+})();
+</script>
+
 </body>
 </html>
