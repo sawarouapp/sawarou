@@ -64,8 +64,8 @@ textarea.code:focus { border-color: var(--accent); }
 textarea.code::placeholder { color: var(--dim); }
 .btn-load { width: 100%; padding: 10px; background: var(--accent); color: #0e0e0f; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; border: none; border-radius: var(--r); cursor: pointer; transition: all .15s; }
 .btn-load:hover { background: #d4eb30; }
-.btn-sample { width: 100%; padding: 9px; background: transparent; border: 1px dashed var(--border); border-radius: var(--r); color: var(--muted); font-size: 12px; cursor: pointer; transition: all .15s; font-family: inherit; }
-.btn-sample:hover { border-color: var(--accent2); color: var(--accent2); }
+.btn-sample { width: 100%; padding: 13px; background: var(--accent); color: #0e0e0f; border: none; border-radius: var(--r); font-size: 13px; font-weight: 800; cursor: pointer; transition: all .15s; font-family: 'Syne', sans-serif; letter-spacing: 0.2px; }
+.btn-sample:hover { background: #d4eb30; transform: translateY(-1px); }
 
 .hint { padding: 10px 12px; background: rgba(71,200,255,.06); border: 1px solid rgba(71,200,255,.15); border-radius: var(--r); font-size: 11px; color: var(--accent2); line-height: 1.6; }
 .sel-info { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 9px 12px; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 6px; min-height: 38px; }
@@ -331,7 +331,10 @@ body { padding-top: 40px; }
       <textarea class="code" id="htmlInput" placeholder="購入後にご利用いただけます" style="pointer-events:none;opacity:0.4;" readonly></textarea>
       <button class="btn-load" id="btnLoad" style="opacity:0.4;pointer-events:none;">▶ プレビューを表示する</button>
       <div class="divider">または</div>
-      <button class="btn-sample" id="btnSample">サンプルHTMLで試してみる</button>
+      <button class="btn-sample" id="btnSample">
+        ✨ まずサンプルで体験する（無料）
+      </button>
+      <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:6px;">購入不要・クリック1回で編集体験できます</div>
     </div>
 
     <div class="panel" id="panelEdit">
@@ -689,6 +692,14 @@ function readFile(file) {
   };
   r.readAsText(file, 'UTF-8');
 }
+// デモ版：ページ読み込み時からDL・コピーをGumroad誘導に設定
+btnDL.disabled = false;
+btnDL.textContent = '購入してダウンロード →';
+btnDL.style.background = 'var(--accent)';
+btnDL.style.color = '#1a1a0e';
+btnCopy.disabled = false;
+btnCopy.textContent = '購入してコピー →';
+
 // デモ版：ファイル読み込みは無効、ドロップ・クリックはGumroadへ
 fileInput.addEventListener('change', function(){ window.open('https://sawarou.gumroad.com/l/sawarou','_blank'); });
 dropZone.addEventListener('dragover', function(e){ e.preventDefault(); dropZone.classList.add('over'); });
@@ -954,7 +965,7 @@ btnCopy.addEventListener('click', function() {
   window.open('https://sawarou.gumroad.com/l/sawarou', '_blank');
 });
 
-// ── RESET ──
+// ── RESET（デモ版）──
 btnReset.addEventListener('click', function() {
   currentFileName = 'edited.html';
   isProcessing = false;
@@ -968,12 +979,18 @@ btnReset.addEventListener('click', function() {
   empty.style.display = 'flex';
   dot.classList.remove('on');
   statusTxt.textContent = 'HTMLを読み込んでください';
-  btnDL.disabled = true;
-  btnCopy.disabled = true;
+  // デモ版：DL・コピーボタンをGumroad誘導に戻す
+  btnDL.disabled = false;
+  btnDL.textContent = '購入してダウンロード →';
+  btnDL.style.background = 'var(--accent)';
+  btnDL.style.color = '#1a1a0e';
+  btnCopy.disabled = false;
+  btnCopy.textContent = '購入してコピー →';
   selInfo.innerHTML = '<span>要素が選択されていません</span>';
   editArea.style.display = 'none';
-  dropZone.querySelector('.drop-title').textContent = 'HTMLファイルをドロップ';
-  dropZone.querySelector('.drop-sub').textContent = 'またはクリックして選択';
+  // デモ版：dropZoneはリセット後も購入訴求のまま維持
+  dropZone.querySelector('.drop-title').textContent = 'ご自身のHTMLを使うには購入が必要です';
+  dropZone.querySelector('.drop-sub').textContent = 'クリックして購入ページへ — ¥3,980';
   dropZone.style.borderColor = '';
   var imgPrevR = document.getElementById('imgPreview');
   if (imgPrevR) { imgPrevR.style.display = 'none'; imgPrevR.src = ''; }
